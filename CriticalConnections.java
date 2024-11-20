@@ -27,8 +27,9 @@ public class CriticalConnections {
     /**
      * TC: O(V+E)
      * SC: O(V+E)
-     *
+     * <p>
      * simple dfs
+     *
      * @param n
      * @param connections
      * @return
@@ -75,6 +76,9 @@ public class CriticalConnections {
             int nodeLow = lowInsertionTime[node];
             int neighLow = lowInsertionTime[neigh];
             lowInsertionTime[node] = Math.min(nodeLow, neighLow);
+            /**
+             * NOTE: If adj node is already visited, then it can never be a bridge as the adj node is already reachable via some other path and ths path is not the sole path
+             */
             // check for bridge (node, neigh)
             // if neighbour node is reachable after node ==> critical connection i.e. bridge found
             if (insertionTime[node] < neighLow) {
