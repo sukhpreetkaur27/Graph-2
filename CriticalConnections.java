@@ -20,6 +20,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CriticalConnections {
@@ -71,22 +72,24 @@ public class CriticalConnections {
             }
             if (!visited[neigh]) {
                 dfs(neigh, adj, visited, insertionTime, lowInsertionTime, time + 1, node, bridges);
-            }
-            // compare low insertion time of parent and neigh
-            int nodeLow = lowInsertionTime[node];
-            int neighLow = lowInsertionTime[neigh];
-            lowInsertionTime[node] = Math.min(nodeLow, neighLow);
-            /**
-             * NOTE: If adj node is already visited, then it can never be a bridge as the adj node is already reachable via some other path and ths path is not the sole path
-             */
-            // check for bridge (node, neigh)
-            // if neighbour node is reachable after node ==> critical connection i.e. bridge found
-            if (insertionTime[node] < neighLow) {
-                // bridge detected
-                List<Integer> bridge = new ArrayList<>();
-                bridge.add(node);
-                bridge.add(neigh);
-                bridges.add(bridge);
+                // compare low insertion time of parent and neigh
+                int nodeLow = lowInsertionTime[node];
+                int neighLow = lowInsertionTime[neigh];
+                lowInsertionTime[node] = Math.min(nodeLow, neighLow);
+                // check for bridge (node, neigh)
+                // if neighbour node is reachable after node ==> critical connection i.e. bridge found
+                if (insertionTime[node] < neighLow) {
+                    // bridge detected
+                    bridges.add(Arrays.asList(node, neigh));
+                }
+            } else {
+                /**
+                 * NOTE: If adj node is already visited, then it can never be a bridge as the adj node is already reachable via some other path and ths path is not the sole path
+                 */
+                // compare low insertion time of parent and neigh
+                int nodeLow = lowInsertionTime[node];
+                int neighLow = lowInsertionTime[neigh];
+                lowInsertionTime[node] = Math.min(nodeLow, neighLow);
             }
         }
     }
