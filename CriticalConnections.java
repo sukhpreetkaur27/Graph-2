@@ -26,7 +26,7 @@ public class CriticalConnections {
 
     /**
      * TC: O(V+E)
-     * SC: O(V+E)
+     * SC: O(V+E) + O(V)
      * <p>
      * simple dfs
      *
